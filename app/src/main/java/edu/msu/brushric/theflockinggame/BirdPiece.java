@@ -70,6 +70,9 @@ public class BirdPiece implements Parcelable{
     // y location in pixels
     private int yInPixels = 0;
 
+    // Scale of the image being drawn
+    private float scale = 0;
+
     public int getType() {
         return type;
     }
@@ -84,7 +87,7 @@ public class BirdPiece implements Parcelable{
     private int type;
 
     /**
-     * recource id for the piece
+     * resource id for the piece
      */
     private int resID;
 
@@ -197,14 +200,11 @@ public class BirdPiece implements Parcelable{
     }
 
     public float getWidth() {
-        float w = (float)bird.getWidth();
-        float p = (float)puzzleSize;
-        float f = (float)bird.getWidth() / (float)puzzleSize;
-        return (float)bird.getWidth() / (float)puzzleSize;
+        return ((float)bird.getWidth() / (float)puzzleSize) * scale;
     }
 
     public float getHeight() {
-        return (float)bird.getHeight() / (float)puzzleSize;
+        return ((float)bird.getHeight() / (float)puzzleSize) * scale;
     }
 
     /**
@@ -218,6 +218,8 @@ public class BirdPiece implements Parcelable{
     public void draw(Canvas canvas, int marginX, int marginY, int puzzleSize, float scaleFactor) {
         xInPixels = marginX + (int)(x * puzzleSize);
         yInPixels = marginY + (int)(y * puzzleSize);
+
+        scale = scaleFactor;
 
         setRect();
 

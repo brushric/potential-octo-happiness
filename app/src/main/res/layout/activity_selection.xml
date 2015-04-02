@@ -41,7 +41,8 @@ android:orientation="vertical">
             android:id="@+id/imageView3"
             android:src="@drawable/robin"
             android:layout_gravity="center_vertical"
-            android:onClick="onSelectRobin"/>
+            android:onClick="onSelectRobin"
+            android:contentDescription="@string/robin"/>
 
         <ImageView
             android:layout_width="0dp"
@@ -50,7 +51,8 @@ android:orientation="vertical">
             android:id="@+id/imageView5"
             android:src="@drawable/ostrich"
             android:adjustViewBounds="true"
-            android:onClick="onSelectOstritch"/>
+            android:onClick="onSelectOstritch"
+            android:contentDescription="@string/ostrich"/>
 
         <ImageView
             android:layout_width="0dp"
@@ -59,7 +61,8 @@ android:orientation="vertical">
             android:id="@+id/imageView"
             android:src="@drawable/bananaquit"
             android:layout_gravity="center_vertical"
-            android:onClick="onSelectBananaquit"/>
+            android:onClick="onSelectBananaquit"
+            android:contentDescription="@string/bananaquit"/>
 
     </LinearLayout>
 
@@ -79,11 +82,13 @@ android:orientation="vertical">
             android:src="@drawable/parrot"
             android:layout_gravity="center_vertical"
             android:adjustViewBounds="false"
-            android:onClick="onSelectParrot"/>
+            android:onClick="onSelectParrot"
+            android:contentDescription="@string/parrot"/>
 
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:id="@+id/spacer"
             android:layout_gravity="center_vertical"
             android:layout_weight="1">
 
@@ -97,7 +102,8 @@ android:orientation="vertical">
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:onClick="onSelectSeagull"/>
+            android:onClick="onSelectSeagull"
+            android:contentDescription="@string/seagull"/>
 
     </LinearLayout>
 

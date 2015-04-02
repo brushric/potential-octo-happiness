@@ -98,7 +98,7 @@ public class Game {
         outlinePaint.setColor(0xff000000);
 
         // Load the solved puzzle image
-        gameBackground = BitmapFactory.decodeResource(context.getResources(), R.drawable.bluesky);
+        gameBackground = BitmapFactory.decodeResource(context.getResources(), R.drawable.sparty_done);
     }
 
     public void initializeBirds(GameManager manager, BirdPiece draggingPiece) {
@@ -110,6 +110,7 @@ public class Game {
             piece.setY(item.getY());
             birds.add(piece);
         }
+
 
         dragging = draggingPiece;
     }
@@ -136,10 +137,10 @@ public class Game {
         scaleFactor = (float)gameSize / (float)gameBackground.getWidth();
 
         for(BirdPiece bird : birds) {
-            bird.draw(canvas, marginX, marginY, gameSize, scaleFactor*2);
+            bird.draw(canvas, marginX, marginY, gameSize, scaleFactor);
             bird.setPuzzleSize(gameSize);
         }
-        dragging.draw(canvas, marginX, marginY, gameSize, scaleFactor * 2);
+        dragging.draw(canvas, marginX, marginY, gameSize, scaleFactor);
         dragging.setPuzzleSize(gameSize);
     }
 

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:focusableInTouchMode="false"
     android:id="@+id/layoutPort"
-    android:background="@drawable/bluesky_converted">
+    style="@style/SkyTheme">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -52,10 +52,20 @@
         android:textSize="@dimen/abc_text_size_subhead_material" />
 
     <FrameLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight=".5"
-        android:id="@+id/frameSpacer"></FrameLayout>
+        android:id="@+id/frameSpacer"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageOstrich"
+            android:contentDescription="@string/ostrich"
+            android:src="@drawable/ostrich"
+            android:layout_gravity="center" />
+    </FrameLayout>
 
     <TextView
         android:layout_width="match_parent"

@@ -15,14 +15,23 @@ public class GameManager implements Parcelable{
     public GameManager() {
     }
 
+    /**
+     * array list of birds placed
+     */
     ArrayList<BirdPiece> arrayList = new ArrayList<>();
 
+    /**
+     * player ones bird
+     */
     private int playerOneBird;
-
+    /**
+     * player twos bird
+     */
     private int playerTwoBird;
 
-    // Number of birds placed
-    // Starts at 0
+    /** Number of birds placed
+     *  Starts at 0
+     */
     private int score = 0;
 
     public int getScore() {
@@ -33,7 +42,9 @@ public class GameManager implements Parcelable{
         this.score = score;
     }
 
-    // Starts at round 1
+    /**
+     * current round, starts at one
+     */
     private int round = 1;
 
     public int getRound() {
@@ -44,8 +55,14 @@ public class GameManager implements Parcelable{
         this.round = round;
     }
 
+    /**
+     * player ones name
+     */
     private String playerOneName;
 
+    /**
+     * player twos name
+     */
     private String playerTwoName;
 
     public void setPlayerWinnerName(String playerWinnerName) {
@@ -102,6 +119,8 @@ public class GameManager implements Parcelable{
         this.playerTwoName = playerTwoName;
     }
 
+    public boolean GetPlayerOneFirst(){ return round % 2 == 1;}
+
     @Override
     public int describeContents() {
         return 0;
@@ -119,6 +138,9 @@ public class GameManager implements Parcelable{
         dest.writeInt(score);
     }
 
+    /**
+     * a parceable creator for the parceble
+     */
     public static final Parcelable.Creator<GameManager> CREATOR
             = new Parcelable.Creator<GameManager>() {
         public GameManager createFromParcel(Parcel in) {
@@ -130,6 +152,10 @@ public class GameManager implements Parcelable{
         }
     };
 
+    /**
+     * Private constructor for the parcablizer which will parcabalize all members
+     * @param in a parcel to put everything into
+     */
     private GameManager(Parcel in){
         playerOneName = in.readString();
         playerTwoName = in.readString();

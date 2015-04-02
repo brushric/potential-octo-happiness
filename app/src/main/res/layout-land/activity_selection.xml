@@ -46,7 +46,8 @@
             android:id="@+id/imageView3"
             android:src="@drawable/robin"
             android:layout_gravity="center_vertical"
-            android:onClick="onSelectRobin"/>
+            android:onClick="onSelectRobin"
+            android:contentDescription="@string/robin"/>
 
         <ImageView
             android:layout_width="0dp"
@@ -55,7 +56,8 @@
             android:id="@+id/imageView"
             android:src="@drawable/bananaquit"
             android:layout_gravity="center_vertical"
-            android:onClick="onSelectBananaquit"/>
+            android:onClick="onSelectBananaquit"
+            android:contentDescription="@string/bananaquit"/>
         <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -64,7 +66,8 @@
             android:src="@drawable/parrot"
             android:layout_gravity="center_vertical"
             android:adjustViewBounds="false"
-            android:onClick="onSelectParrot"/>
+            android:onClick="onSelectParrot"
+            android:contentDescription="@string/parrot"/>
 
         <ImageView
             android:layout_width="0dp"
@@ -73,7 +76,8 @@
             android:id="@+id/imageView5"
             android:src="@drawable/ostrich"
             android:adjustViewBounds="true"
-            android:onClick="onSelectOstritch"/>
+            android:onClick="onSelectOstritch"
+            android:contentDescription="@string/ostrich"/>
 
 
 
@@ -85,7 +89,8 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:onClick="onSelectSeagull"/>
+            android:onClick="onSelectSeagull"
+            android:contentDescription="@string/seagull"/>
 
 
     </LinearLayout>

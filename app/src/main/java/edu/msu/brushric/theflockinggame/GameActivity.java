@@ -27,7 +27,8 @@ public class GameActivity extends ActionBarActivity {
     /**
      * flag for whos turn it is
      */
-    private boolean playerOneTurn = true;
+    private boolean playerOnePlaced = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,23 +45,23 @@ public class GameActivity extends ActionBarActivity {
             // set the manager from the bundle
             manager = b.getParcelable(WelcomeActivity.PARCELABLE);
 
-        // see if it is the first or second players turn
-        if (manager.getPlayerOneBird() == 0) {
-            game.initializeBirds(manager, new BirdPiece(this, manager.getPlayerTwoBird()));
-            playerOneTurn = false;
-        } else {
+        if (!(manager.getPlayerOneBird() == 0)  && manager.GetPlayerOneFirst()
+                || manager.getPlayerTwoBird() == 0 && !manager.GetPlayerOneFirst()) {
             game.initializeBirds(manager, new BirdPiece(this, manager.getPlayerOneBird()));
+        }
+        else {
+            game.initializeBirds(manager, new BirdPiece(this, manager.getPlayerTwoBird()));
+            playerOnePlaced = true;
         }
 
         // set the player name text view to the correct player
         TextView playerNameView = (TextView) findViewById(R.id.playerName);
         String playerName;
-        if(manager.getPlayerOneBird() == 0) {
-            playerName = manager.getPlayerTwoName();
-        }
-        else {
+        // set the persons name
+        if (!(manager.getPlayerOneBird() == 0)  && manager.GetPlayerOneFirst()
+                || manager.getPlayerTwoBird() == 0 && !manager.GetPlayerOneFirst())
             playerName = manager.getPlayerOneName();
-        }
+        else playerName = manager.getPlayerTwoName();
         playerNameView.setText(this.getString(R.string.placing) + " " + playerName);
     }
 
@@ -69,44 +70,64 @@ public class GameActivity extends ActionBarActivity {
 
         // Check to see if the bird being placed is out of bounds
         if (game.outOfBounds() || game.collision()) {
-            if(playerOneTurn) {
-                manager.setPlayerWinnerName(manager.getPlayerTwoName());
-            }
-            else {
-                manager.setPlayerWinnerName(manager.getPlayerOneName());
-            }
+            String playerName;
+            if (!(manager.getPlayerOneBird() == 0)  && manager.GetPlayerOneFirst()
+                    || manager.getPlayerTwoBird() == 0 && !manager.GetPlayerOneFirst())
+                playerName = manager.getPlayerTwoName();
+            else playerName = manager.getPlayerOneName();
+
+            manager.setPlayerWinnerName(playerName);
 
             Intent intent = new Intent(this, WinActivity.class);
             b.putParcelable(WelcomeActivity.PARCELABLE, manager);
-            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtras(b);
+            intent.putExtras(b);
             startActivity(intent);
             return;
         }
 
+        // add the piece that is beeing placed to the game manager array
         manager.addPiece(game.getDragging());
 
         // Increment score because bird was placed
         manager.setScore(manager.getScore() + 1);
 
-        if (playerOneTurn) {
-            manager.setPlayerOneBird(0);
+        // determine to go to next round or end game
+        if (!playerOnePlaced && manager.GetPlayerOneFirst())
+            NextTurn(1);
+        else if (!(manager.getPlayerTwoBird() == 0) && !manager.GetPlayerOneFirst())
+            NextTurn(2);
+        else if (!playerOnePlaced && !manager.GetPlayerOneFirst())
+            NextRound(1);
+        else
+            NextRound(2);
+    }
 
-            // add the parcable to the bundle and return to the game activity
-            Intent intent = new Intent(this, GameActivity.class);
-            b.putParcelable(WelcomeActivity.PARCELABLE, manager);
-            intent.putExtras(b);
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(this, SelectionActivity.class);
-            //Intent intent = new Intent(this, WinActivity.class);
-            manager.setPlayerTwoBird(0);
+    private void NextTurn(int player){
+        if (player == 1) manager.setPlayerOneBird(0);
+        else manager.setPlayerTwoBird(0);
 
-            // add the parcable to the bundle and go to the selection activity
+        Bundle b = new Bundle();
 
-            b.putParcelable(WelcomeActivity.PARCELABLE, manager);
-            intent.putExtras(b);
-            startActivity(intent);
-        }
+        // add the parcable to the bundle and return to the game activity
+        Intent intent = new Intent(this, GameActivity.class);
+        b.putParcelable(WelcomeActivity.PARCELABLE, manager);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtras(b);
+        startActivity(intent);
+    }
+    private void NextRound(int player){
+        if (player == 1) manager.setPlayerOneBird(0);
+        else manager.setPlayerTwoBird(0);
+
+        Bundle b = new Bundle();
+        Intent intent = new Intent(this, SelectionActivity.class);
+        manager.setPlayerTwoBird(0);
+
+        // add the parcable to the bundle and go to the selection activity
+        manager.setRound(manager.getRound() + 1);
+        b.putParcelable(WelcomeActivity.PARCELABLE, manager);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtras(b);
+        startActivity(intent);
     }
 }

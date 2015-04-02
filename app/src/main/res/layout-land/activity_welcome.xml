@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:id="@+id/layoutland"
     android:focusableInTouchMode="true"
-    android:background="@drawable/bluesky_converted">
+    style="@style/SkyTheme">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -111,7 +111,18 @@
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:id="@+id/spacer1"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageOstrich"
+                android:contentDescription="@string/ostrich"
+                android:src="@drawable/ostrich"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
 
         <Button
             android:layout_width="0dp"

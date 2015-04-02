@@ -55,6 +55,7 @@ public class WelcomeActivity extends ActionBarActivity {
                 manager.setPlayerTwoName(playerTwo.getText().toString());
                 b.putParcelable(PARCELABLE, manager);
                 intent.putExtras(b);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
 

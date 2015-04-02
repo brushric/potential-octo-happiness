@@ -29,7 +29,10 @@ public class SelectionActivity extends ActionBarActivity {
         // set the player name text view to the correct player
         TextView playerName = (TextView) findViewById(R.id.playerNumber);
         String userName;
-        if(manager.getPlayerOneBird() == 0) userName = manager.getPlayerOneName();
+        // set the persons name
+        if ((manager.getPlayerOneBird() == 0)  && manager.GetPlayerOneFirst()
+                || !(manager.getPlayerTwoBird() == 0) && !manager.GetPlayerOneFirst())
+             userName = manager.getPlayerOneName();
         else userName = manager.getPlayerTwoName();
         playerName.setText(this.getString(R.string.selecting) + " " + userName);
     }
@@ -75,29 +78,36 @@ public class SelectionActivity extends ActionBarActivity {
      * function that switches the activity based on what user selection it is
      */
     void ChangeActivity(int bird){
+        // determine to go to next round or let the other player pick
+        if (manager.getPlayerOneBird() ==  0 && manager.GetPlayerOneFirst())
+            NextTurn(1, bird, false);
+        else if ((manager.getPlayerTwoBird() == 0) && !manager.GetPlayerOneFirst())
+            NextTurn(2, bird, false);
+        else if (manager.getPlayerOneBird() ==  0 && !manager.GetPlayerOneFirst())
+            NextTurn(1,bird, true);
+        else
+            NextTurn(2, bird, true);
+    }
 
+    /**
+     * Function moves to the next turn or to the game activity
+     * @param player number for the person who just went
+     * @param bird to be added to that player
+     * @param game flag for if you go to the game or not. if true moves to the game activity
+     *             if it is false it goes to selection for the other player
+     */
+    private void NextTurn(int player, int bird, boolean game){
         Bundle b = new Bundle();
+        Intent intent;
+        if(player == 1) manager.setPlayerOneBird(bird);
+        else manager.setPlayerTwoBird(bird);
 
-        // show a tost to let the user know what bird they selected
-        //fix here
-//        Toast.makeText(this, bird + " Selected", Toast.LENGTH_SHORT).show();
+        b.putParcelable(WelcomeActivity.PARCELABLE, manager);
 
-        if(manager.getPlayerOneBird() == 0){
-            Intent intent = new Intent(this, SelectionActivity.class);
-            // add the bird player one selected to the manager
-            manager.setPlayerOneBird(bird);
-            b.putParcelable(WelcomeActivity.PARCELABLE, manager);
-            intent.putExtras(b);
-            startActivity(intent);
-        }
-        else{
-            Intent intent = new Intent(this, GameActivity.class);
-            // add the bird player two selected to the manager
-            manager.setPlayerTwoBird(bird);
-            b.putParcelable(WelcomeActivity.PARCELABLE, manager);
-            intent.putExtras(b);
-            startActivity(intent);
-        }
+        if (!game)  intent = new Intent(this, SelectionActivity.class).putExtras(b);
+        else intent = new Intent(this, GameActivity.class).putExtras(b);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
 }
